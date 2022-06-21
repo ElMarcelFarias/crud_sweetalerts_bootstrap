@@ -44,7 +44,7 @@
                     <td><?= $row['gender']?></td>
                     <td><?= $row['phone']?></td>
                     <td>
-                        <button type="button" class="btn btn-warning btn-sm"><span class="material-icons align-text-bottom">edit</span></button>
+                        <button type="button" class="btn btn-warning btn-sm updateUser" id="<?=$row['id']?>"><span class="material-icons align-text-bottom">edit</span></button>
                         <button type="button" class="btn btn-danger btn-sm deleteUser" id="<?=$row['id']?>"><span class="material-icons align-text-bottom">close</span></button>
                     </td>
                 </tr>
@@ -105,6 +105,7 @@
         </div>
     </div>
 
+    <div id="modal_edit"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
@@ -112,12 +113,43 @@
 
 <script>
 
+$(document).on('click', '.updateUser', function(){
+    var id = $(this).attr('id');
+
+    $("#modal_edit").html('');
+    $.ajax({
+        url: 'viewUser.php',
+        type: 'POST',
+        cache: false,
+        data: {id:id},
+        success:function(data){
+            $("#modal_edit").html(data);
+            $("#updateUserModal").modal('show');
+        }
+    })
+    
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+//deletar usuário
 $(document).on('click', '.deleteUser', function(){
     var id = $(this).attr('id');
 
     Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
+        title: 'Realmente quer fazer isto?',
+        text: "O usuário será deletado permanentemente!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#28a745',
@@ -143,8 +175,6 @@ $(document).on('click', '.deleteUser', function(){
         }
         })
 })
-
-
 
 
 
