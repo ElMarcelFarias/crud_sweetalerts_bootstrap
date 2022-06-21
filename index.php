@@ -45,6 +45,7 @@
                     <td><?= $row['phone']?></td>
                     <td>
                         <button type="button" class="btn btn-warning btn-sm"><span class="material-icons align-text-bottom">edit</span></button>
+                        <button type="button" class="btn btn-danger btn-sm deleteUser" id="<?=$row['id']?>"><span class="material-icons align-text-bottom">close</span></button>
                     </td>
                 </tr>
                 <?php
@@ -96,8 +97,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
-                        <button type="submit" class="btn btn-success">ADD NEW USER</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><span class="material-icons align-text-bottom">close</span></button>
+                        <button type="submit" class="btn btn-success"><span class="material-icons align-text-bottom">done</span></button>
                     </div>
                 </form>
             </div>
@@ -110,6 +111,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.18/sweetalert2.all.min.js"></script>
 
 <script>
+
+$(document).on('click', '.deleteUser', function(){
+    var id = $(this).attr('id');
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: 'deleteUser.php',
+                type: 'POST',
+                data: {id:id},
+                success:function(data){
+                    Swal.fire({
+                        title: 'Success',
+                        icon: 'success',
+                        text: 'Usuário deletado com sucesso!'
+                    }).then(()=>{
+                        window.location.reload();
+                    })
+                }
+
+            })
+        }
+        })
+})
+
+
+
+
+
+
+// Adicionar um campo, via AJAX SweetAlerts2
     $(document).ready(function(){
         $("#newUserForm").submit(function(e){
             e.preventDefault();
@@ -135,8 +175,7 @@
                         Swal.fire({
                             title: 'Success',
                             text: 'Usuário adicionado com sucesso!',
-                            icon: 'success',
-                            timer: 5000
+                            icon: 'success'
                         }).then(()=>{
                             window.location.reload();
                         })
@@ -145,9 +184,6 @@
                 })
             }
         })
-
-
-        
     })
     
 </script>
