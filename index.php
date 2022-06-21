@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.18/sweetalert2.min.css">
     <title>Crud | Sweetalert2 | Bootstrap4</title>
 </head>
 <body>
@@ -65,7 +66,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <label for="phone">Número</label>
-                                    <input type="text" class="form-control" name="phone" id="phone">
+                                    <input type="number" class="form-control" name="phone" id="phone">
                                 </div>
                             </div>
 
@@ -83,7 +84,48 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.18/sweetalert2.all.min.js"></script>
+
 <script>
+    $(document).ready(function(){
+        $("#newUserForm").submit(function(e){
+            e.preventDefault();
+
+            var first_name = $("#first_name").val();
+            var last_name = $("#last_name").val();
+            var phone = $("#phone").val();
+
+            if(first_name == '' || last_name == '' || phone == '') {
+                Swal.fire(
+                    'Erro',
+                    'Por favor, preencha os campos corretamente!',
+                    'error'
+                    )
+            } else {
+                $.ajax({
+                    url: 'newUser.php',
+                    type: 'POST',
+                    data: $(this).serialize(),
+                    cache: false,
+                    success:function(data){
+                        $('#newUserModal').hide();
+                        Swal.fire({
+                            title: 'Success',
+                            text: 'Usuário adicionado com sucesso!',
+                            icon: 'success',
+                            timer: 5000
+                        }).then(()=>{
+                            window.location.reload();
+                        })
+                        
+                    }
+                })
+            }
+        })
+
+
+        
+    })
     
 </script>
 </body>
