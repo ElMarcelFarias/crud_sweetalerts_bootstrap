@@ -8,17 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.18/sweetalert2.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
     <title>Crud | Sweetalert2 | Bootstrap4</title>
 </head>
 <body>
     
-    <div class="container-fluid bg-primary py-2 text-center">
+    <div class="container-fluid bg-info py-2 text-center">
         <h2>CRUD BOOTSTRAP 4</h2>
     </div>
 
 
     <div class="container mt-5">
-        <button type="button" class="btn btn-info mb-3" data-toggle="modal" data-target="#newUserModal">ADD USER</button>
+        <button type="button" class="btn btn-info mb-3" data-toggle="modal" data-target="#newUserModal"><span class="material-icons align-text-bottom">add</span></button>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -29,6 +30,28 @@
                     <th>Action</th>
                 </tr>
             </thead>
+            <tbody>
+            <?php 
+
+            $sql = "SELECT * FROM user_info";
+            $query = $con->query($sql) or die($con->error);
+            while($row = $query->fetch_assoc()){
+                ?>
+
+                <tr>
+                    <td><?= $row['first_name']?></td>
+                    <td><?= $row['last_name']?></td>
+                    <td><?= $row['gender']?></td>
+                    <td><?= $row['phone']?></td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-sm"><span class="material-icons align-text-bottom">edit</span></button>
+                    </td>
+                </tr>
+                <?php
+            }
+
+            ?>
+            </tbody>
         </table>
     </div>
 
