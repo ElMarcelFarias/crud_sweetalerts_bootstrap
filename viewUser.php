@@ -78,15 +78,12 @@ if(isset($_REQUEST['id'])){
         $("#editUserForm").submit(function(e){
             e.preventDefault();
 
-            var first_name = $("#edit_first_name").val();
-            var last_name = $("#edit_last_name").val();
+            var fname = $("#edit_first_name").val();
+            var lname = $("#edit_last_name").val();
             var gender = $("#edit_gender").val();
             var phone = $("#edit_phone").val();
 
-            alert(first_name);
-            alert(last_name);
-            alert(gender);
-            alert(phone);
+          
 
             if(first_name == '' || last_name == '' || phone == '') {
                 Swal.fire({
