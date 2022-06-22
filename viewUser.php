@@ -9,11 +9,12 @@ if(isset($_REQUEST['id'])){
     $query = $con->query($sql) or die($con->error);
     $row = $query->fetch_assoc();
 
-    $first_name = $row['first_name'];
-    $last_name = $row['last_name'];
+    $fname = $row['first_name'];
+    $lname = $row['last_name'];
     $gender = $row['gender'];
     $phone = $row['phone'];
 }
+
 
 ?>
 
@@ -22,29 +23,29 @@ if(isset($_REQUEST['id'])){
     <div class="modal-dialog">
         <div class="modal-content">
 
-        <form id="editUserForm" method="POST" action="editUser.php">
+        <form id="editUserForm" method="POST">
             <div class="modal-body">
                 <div class="row">
 
                     <input type="hidden" value="<?= $id?>" name="user_id" id="user_id">
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="first_name">Nome</label>
-                            <input type="text" class="form-control" name="first_name" id="first_name" value="<?=$first_name?>">
+                            <label for="edit_first_name">Nome</label>
+                            <input type="text" class="form-control" name="edit_first_name" id="edit_first_name" value="<?=$fname?>">
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="last_name">Sobrenome</label>
-                            <input type="text" class="form-control" name="last_name" id="last_name" value="<?=$last_name?>">
+                            <label for="edit_last_name">Sobrenome</label>
+                            <input type="text" class="form-control" name="edit_last_name" id="edit_last_name" value="<?=$lname?>">
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="gender">Gênero</label>
-                            <select name="gender" id="gender" class="custom-select">
+                            <label for="edit_gender">Gênero</label>
+                            <select name="edit_gender" id="edit_gender" class="custom-select">
                                 <option value="Male" <?= $gender == "Male"? "selected": ''?>>Masculino</option>
                                 <option value="Female" <?= $gender == "Female"? "selected": ''?>>Feminino</option>
                             </select>
@@ -53,8 +54,8 @@ if(isset($_REQUEST['id'])){
 
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="phone">Número</label>
-                            <input type="number" class="form-control" name="phone" id="phone" value="<?=$phone?>">
+                            <label for="edit_phone">Número</label>
+                            <input type="number" class="form-control" name="edit_phone" id="edit_phone" value="<?=$phone?>">
                         </div>
                     </div>
 
@@ -72,15 +73,20 @@ if(isset($_REQUEST['id'])){
 
 
 <script>
-    /*
+    
     $(document).ready(function(){
         $("#editUserForm").submit(function(e){
             e.preventDefault();
 
-            var first_name = $("#edit_fname").val();
-            var last_name = $("#edit_sname").val();
-            var gender = $("#edit_gder").val();
-            var phone = $("#edit_ph").val();
+            var first_name = $("#edit_first_name").val();
+            var last_name = $("#edit_last_name").val();
+            var gender = $("#edit_gender").val();
+            var phone = $("#edit_phone").val();
+
+            alert(first_name);
+            alert(last_name);
+            alert(gender);
+            alert(phone);
 
             if(first_name == '' || last_name == '' || phone == '') {
                 Swal.fire({
@@ -126,5 +132,5 @@ if(isset($_REQUEST['id'])){
 
         })
     })
-    */
+    
 </script>
